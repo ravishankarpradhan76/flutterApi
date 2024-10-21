@@ -10,8 +10,10 @@ class PostApiPractice extends StatefulWidget {
 }
 
 class _PostApiPracticeState extends State<PostApiPractice> {
+  /// Form key
   final _formKey = GlobalKey<FormState>();
 
+  /// Controllers
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -23,7 +25,6 @@ class _PostApiPracticeState extends State<PostApiPractice> {
     setState(() {
       isLoading = true;
     });
-
     var url = Uri.parse(ApiUrls.loginUrl);
 
     Map<String, String> requestBody = {
@@ -48,13 +49,13 @@ class _PostApiPracticeState extends State<PostApiPractice> {
         setState(() {
           responseMessage = "Login Successful. Token: ${data['token']}";
         });
-        showToast(context, responseMessage, Colors.green);
+        showToast(context,responseMessage,Colors.green);
       } else {
         var errorResponse = jsonDecode(response.body);
         setState(() {
           responseMessage = errorResponse['error']; // Display error message
         });
-        showToast(context, responseMessage, Colors.red);
+        showToast(context,responseMessage,Colors.red);
       }
     } catch (e, _) {
       setState(() {
@@ -63,98 +64,91 @@ class _PostApiPracticeState extends State<PostApiPractice> {
       setState(() {
         responseMessage = "Error: $e $_";
       });
-      showToast(context, responseMessage, Colors.red);
+      showToast(context,responseMessage,Colors.red);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                TextFormField(
-                  controller: emailController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.blueAccent,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelText: "Enter Email-ID"),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                        .hasMatch(value)) {
-                      return 'Please enter a valid email';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller: passwordController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.blueAccent,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelText: "Enter Password"),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    } else if (value.length < 6) {
-                      return 'Password must be at least 6 characters long';
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState?.validate() == true) {
-                        print("You tapped on login button");
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: emailController,
+                    decoration:
+                    const InputDecoration(labelText: "Enter Email-ID"),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                          .hasMatch(value)) {
+                        return 'Please enter a valid email';
                       }
+                      return null;
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueGrey,
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "LOGIN",
-                        style: TextStyle(color: Colors.white, fontSize: 15.0),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    controller: passwordController,
+                    decoration:
+                    const InputDecoration(labelText: "Enter Password"),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      } else if (value.length < 6) {
+                        return 'Password must be at least 6 characters long';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  isLoading == true
+                      ? const CircularProgressIndicator(
+                    color: Colors.black,
+                  )
+                      : ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState?.validate() == true) {
+                          print("You tapped on login button");
+                          login();
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueGrey,
                       ),
-                    ))
-              ],
+                      child: const Center(
+                        child: Text(
+                          "LOGIN",
+                          style: TextStyle(
+                              color: Colors.white, fontSize: 15.0),
+                        ),
+                      ))
+                ],
+              ),
             ),
           ),
         ),
       ),
-    ));
+    );
   }
 
-  void showToast(
-      BuildContext context, String? responseMessage, MaterialColor red) {}
+  void showToast(BuildContext context, String? responseMessage, MaterialColor green) {}
+}
+class ApiUrls {
+  static String baseUrl = "https://dummyjson.com";
+  static String productUrl = "/products";
+  static String getPosts = "/posts";
+  static const loginUrl = "https://reqres.in/api/login";
 }
 
-class ApiUrls {
-  static String baseUrl = "http:dummyjson.com";
-  static String productUrl = "/products";
-  static String getPosts = "/post";
-  static String loginUrl = "http://reqres.in/api/login";
-}
+
