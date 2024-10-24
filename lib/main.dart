@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/pages/Post_Api_practice1.dart';
 import 'package:flutter_app/pages/Sign_Up.dart';
 import 'package:flutter_app/pages/Post_Api_Practice.dart';
 import 'package:flutter_app/pages/Post_Api_Revision.dart';
+import 'package:flutter_app/pages/Splash_Page.dart';
 import 'package:flutter_app/pages/get_Api_practice.dart';
 import 'package:flutter_app/pages/signUp.dart';
 
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:SignUp(),
+      home:SplashPage(),
     );
   }
 }
