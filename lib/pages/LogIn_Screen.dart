@@ -40,15 +40,69 @@ class _LoginScreenState extends State<LoginScreen> {
         print(data);
         print('Account created successfully');
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+        // Show success alert
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Success'),
+              content: Text('Your Account has been created successfully!'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                          (Route<dynamic> route) => false, // Remove all previous routes
+                    );
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
         );
       } else {
-        print('Failed');
+        // Show failure alert
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text('Failed to create account. Please try again.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
       }
     } catch (e) {
       print(e.toString());
+      // Show error alert
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('An error occurred. Please try again.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
     } finally {
       setState(() {
         isLoading = false; // Stop loading

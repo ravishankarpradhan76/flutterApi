@@ -106,40 +106,34 @@ class HomePageState extends State<HomePage> {
                                               children: [
                                                 Text(
                                                     'ID: ${snapshot.data![index]['id']}'),
-                                                SizedBox(height: 15),
+                                                SizedBox(height: 10),
                                                 Text(
                                                     'Slug: ${snapshot.data![index]['slug']}'),
-                                                SizedBox(height: 15),
+                                                SizedBox(height: 10),
                                                 Text(
                                                   'Title: ${snapshot.data![index]['title']}',
                                                   maxLines: 1,
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                 ),
-                                                SizedBox(height: 15),
+                                                SizedBox(height: 10),
                                                 Text(
                                                   'Content: ${snapshot.data![index]['content']}',
                                                   maxLines: 1,
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                 ),
-                                                SizedBox(height: 19),
-                                                Container(
-                                                  height: 30,
-                                                  width: 80,
-                                                  child: Center(
-                                                      child: Text('Category',
-                                                          style: TextStyle(
-                                                              fontSize: 10))),
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Colors.blue),
-                                                  ),
+                                                SizedBox(height: 10),
+                                                Text(
+                                                  'Category: ${snapshot.data![index]['category']}',
+                                                  maxLines: 1,
+                                                  overflow:
+                                                  TextOverflow.ellipsis,
                                                 ),
                                               ],
                                             ),
                                             Positioned(
-                                              right: 10,
+                                              right: 1,
                                               child: Container(
                                                 height: 30,
                                                 width: 80,
@@ -164,7 +158,7 @@ class HomePageState extends State<HomePage> {
                               ),
                               Positioned(
                                 bottom: 26,
-                                right: 15,
+                                right: 30,
                                 child: Container(
                                   height: 30,
                                   width: 80,
