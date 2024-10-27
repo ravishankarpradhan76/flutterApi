@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'Details_Page.dart'; // Ensure you import your DetailsPage
+import 'Payment_Page.dart'; // Import your PaymentPage
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,7 +14,7 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   Future<List<dynamic>> getUserApi() async {
     final response =
-        await http.get(Uri.parse('https://jsonplaceholder.org/posts'));
+    await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
@@ -52,7 +53,7 @@ class HomePageState extends State<HomePage> {
                 if (!snapshot.hasData) {
                   return Center(
                       child:
-                          CircularProgressIndicator()); // Show loading indicator
+                      CircularProgressIndicator()); // Show loading indicator
                 } else {
                   return ListView.builder(
                     itemCount: snapshot.data!.length,
@@ -77,17 +78,17 @@ class HomePageState extends State<HomePage> {
                                   padding: const EdgeInsets.all(23.0),
                                   child: Row(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Container(
                                         width: 110,
                                         height: 150,
                                         decoration: BoxDecoration(
                                           borderRadius:
-                                              BorderRadius.circular(12),
+                                          BorderRadius.circular(12),
                                           image: DecorationImage(
                                             image: NetworkImage(snapshot
-                                                    .data![index]['image'] ??
+                                                .data![index]['image'] ??
                                                 ''),
                                             fit: BoxFit.cover,
                                           ),
@@ -99,10 +100,10 @@ class HomePageState extends State<HomePage> {
                                           children: [
                                             Column(
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                               mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                              MainAxisAlignment
+                                                  .spaceBetween,
                                               children: [
                                                 Text(
                                                     'ID: ${snapshot.data![index]['id']}'),
@@ -114,14 +115,14 @@ class HomePageState extends State<HomePage> {
                                                   'Title: ${snapshot.data![index]['title']}',
                                                   maxLines: 1,
                                                   overflow:
-                                                      TextOverflow.ellipsis,
+                                                  TextOverflow.ellipsis,
                                                 ),
                                                 SizedBox(height: 10),
                                                 Text(
                                                   'Content: ${snapshot.data![index]['content']}',
                                                   maxLines: 1,
                                                   overflow:
-                                                      TextOverflow.ellipsis,
+                                                  TextOverflow.ellipsis,
                                                 ),
                                                 SizedBox(height: 10),
                                                 Text(
@@ -141,11 +142,11 @@ class HomePageState extends State<HomePage> {
                                                     child: Text('Status',
                                                         style: TextStyle(
                                                             color:
-                                                                Colors.white))),
+                                                            Colors.white))),
                                                 decoration: BoxDecoration(
                                                   color: Colors.green,
                                                   borderRadius:
-                                                      BorderRadius.circular(12),
+                                                  BorderRadius.circular(12),
                                                 ),
                                               ),
                                             ),
@@ -159,16 +160,28 @@ class HomePageState extends State<HomePage> {
                               Positioned(
                                 bottom: 26,
                                 right: 30,
-                                child: Container(
-                                  height: 30,
-                                  width: 80,
-                                  child: Center(
-                                      child: Text('Published',
-                                          style:
-                                              TextStyle(color: Colors.white))),
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(12),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => PaymentPage(
+                                          data: snapshot.data![index],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    height: 30,
+                                    width: 80,
+                                    child: Center(
+                                        child: Text('Payment',
+                                            style: TextStyle(
+                                                color: Colors.white))),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
                                   ),
                                 ),
                               ),
